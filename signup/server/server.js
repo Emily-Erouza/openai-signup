@@ -24,11 +24,11 @@ app.get("/api/openai.com", (req, res) => {
     })
   });
   
-  app.post("/api/openai.com", async (req, res) => {
-    console.log(req.body)
-    userModel.create(req.body)
-    res.send()
-  });
+  // app.post("/api/openai.com/vi/completions", async (req, res) => {
+  //   console.log(req.body)
+  //   userModel.create(req.body)
+  //   res.send()
+  // });
 
 
 app.listen(3004,() => console.log(`server is running `));

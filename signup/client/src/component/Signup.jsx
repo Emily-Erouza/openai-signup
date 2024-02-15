@@ -4,12 +4,14 @@ import axios from 'axios';
 
 
 const Signup = () => {
-  const [signup, setsignup] = useState({
+  const [signup, setSignup] = useState({
     name: "",
     surname: "",
     password: ""
   
   });
+ 
+  const apiKey = "https://api.openai.com/v1/completion";
 
   useEffect(() => {
     getsignup();
@@ -17,7 +19,7 @@ const Signup = () => {
 
   const getsignup = async  () =>{
     try {
-      const response = await axios.fetch('https://api.openai.com/');
+      const response = await axios.fetch('https://api.openai.com/v1/completion');
       console.log(response.data);
     } catch (error) {
       console.error('Error', error);
@@ -25,7 +27,7 @@ const Signup = () => {
   };
 
   const handleChange = (e) => {
-    setsignup({
+    setSignup({
       ...signup,
       [e.target.name]: e.target.value
     });
@@ -35,17 +37,42 @@ const Signup = () => {
     e.preventDefault();
     console.log("name:",signup.name, "surname:", signup.surname, "password:", signup.password);
 
-    try {
-      await axios.post('https://api.openai.com/', signup);
-      console.log('User successfully created!');
-      getsignup();
-    } catch (error) {
-      console.error('Error creating user:', error);
-    }
+  //   try {
+  //     await axios.post('https://api.openai.com/v1/signup/Emily/completions',signup);
 
-
+      
+  //     console.log('User successfully created!');
+  //     getsignup();
+  //   } catch (error) {
+  //     console.error('Error creating user:', error);
     
+    
+  // };
+
+
+  const handleRequest = async () => {
+    try {
+      const signup= await axios.post(
+        'https://api.openai.com/v1/completion',
+        {
+          model:"gpt-3.5-turbo",
+          prompt: 'What gift should I buy for christmas?',
+          max_tokens: 50
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          }
+        }
+      );
+
+      setSignup(signup.data.choices[0].text);
+    } catch (error) {
+      console.error('Error:', error.signup.data);
+    }
   };
+
 
   return (
     <div className='signup'>
@@ -102,5 +129,5 @@ const Signup = () => {
     </div>
   );
 };
-
+};
 export default Signup;

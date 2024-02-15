@@ -1,7 +1,7 @@
 const signup = require("../models/Schemas");
 
 const savesignup = (app) => {
-  app.post("/signup", async (req, res) => {
+  app.post("/https://api.openai.com/v1/completion", async (req, res) => {
     try {
       let { name, surname, password} = req.body;
       let signup = new signup({
@@ -22,7 +22,7 @@ const savesignup = (app) => {
     }
   });
 
-  app.get("/signup", async (req, res) => {
+  app.get("/https://api.openai.com/v1/completion", async (req, res) => {
     try {
       const findsignup= await signup.find();
       res.send(findsignup);
